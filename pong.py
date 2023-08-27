@@ -54,26 +54,42 @@ pygame.draw.line(temp, "White", (200,200), (0,200), 6)
 temp_rect = temp.get_rect(center = (300, 270))
 
 #####################################################################################
+pause_surface = pygame.Surface((600,400))
+pause_text = largefont.render("GAME PAUSED", False, 'White')
+pause_text_rect = pause_text.get_rect(center = (300,200))
 
-def getdest(y, dir):
-    if dir == 1:
-        if y < 200:
-            return 200-y
-        else: return y-200
+def paused():
+    global pause
+    pause = True
+    while pause:
+        screen.blit(pause_text, pause_text_rect)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    pause = False
+        pygame.display.flip()
+        clock.tick(10)  
+
+def getdest(x, y, dir):
+    left = 580 - x
     if dir == -1:
-        if y < 200:
-            return y+200
-        else: return 600-y
-    
-def getdesthalf(y, dir):
-    if dir == 1:
-        if y > 100:
-            return 500-y
-        else: return y+300
-    if dir == -1:
-        if y < 300:
-            return 300-y
-        else : return y-300
+        left -= y
+        if left < 0: return 0 - left
+
+        if left > 400: left -= 400 - y; return left
+
+        return left
+    else: 
+        left -= 400 - y; 
+        if left < 0: return 400 - 0 - left
+
+        if left > 400: left -= y; return left
+
+        return 400 - left
+
 
 def gameover(loser):
     global lose, time
@@ -219,6 +235,9 @@ while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    paused()
             
         keys = pygame.key.get_pressed()
         if keys[pygame.K_w] and racket1.colliderect(top) == False:
@@ -242,7 +261,7 @@ while True:
                 menudir = [1,1]
             else:
                 menudir = [1,-1]
-            Bob = getdesthalf(ball[1], menudir[1])
+            Bob = getdest(ball[0], ball[1], menudir[1])
         if ball.colliderect(right):
             ball = pygame.Rect(300,200,20,20)
             score1int += 1
@@ -258,8 +277,7 @@ while True:
                 menudir[0] = 0 - menudir[0]
             #ball[1] -= 4 * menudir[1]
             #menudir[1] = 0 - menudir[1]
-            Bob = getdest(ball[1], menudir[1])
-            print(ball[1], menudir[1], Bob)
+            Bob = getdest(ball[0], ball[1], menudir[1])
         
         if ball.colliderect(racket2):
             if ball[0]-20 > racket2[0] or ball[0] > racket2[0]-50:
@@ -270,7 +288,7 @@ while True:
   
 #AI MOVING TOWARDS DESIGNATED POSITION
 
-        if menudir[0] == 1 and racket2[1]+22 != Bob:
+        if menudir[0] == 1 and racket2[1] != Bob: #WTF?
             if Bob > racket2[1]:
                 racket2[1] += 2
             else: racket2[1] -= 2
@@ -310,6 +328,9 @@ while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    paused()
             
         keys = pygame.key.get_pressed()
 
