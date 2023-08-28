@@ -1,6 +1,6 @@
 # AI logic
 
-The coordinates of where the balls is expected to be is cheesed everytime P1 loses and the ball is redirected towards Bob (the Bot) or player 1 changes the x direction of the ball by hitting it with their racket. Buggy, sometimes works sometimes doesnt, but on the bright side you can actually win against it.
+The coordinates of where the balls is expected to be is cheesed everytime P1 loses and the ball is redirected towards Bob (the Bot) or player 1 changes the x direction of the ball by hitting it with their racket. Tested, doesnt work in 2 cases so far. WILL BE FIXED IN DUE TIME
 
 # Future Improvements
 
@@ -11,4 +11,4 @@ The coordinates of where the balls is expected to be is cheesed everytime P1 los
 # Controls
 
 In 2 Player the keys are W, S & UP, DOWN respectively
-P to Pause the game (don't tell your opponents)
+P to Pause the game 
