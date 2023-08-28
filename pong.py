@@ -77,18 +77,18 @@ def getdest(x, y, dir):
     left = 580 - x
     if dir == -1:
         left -= y
-        if left < 0: return 0 - left
+        if left < 0: return 0 - left - 25
 
-        if left > 400: left -= 400 - y; return left
+        if left > 400: left -= 400 - y; return left - 25
 
-        return left
+        return left - 25
     else: 
         left -= 400 - y; 
-        if left < 0: return 400 - 0 - left
+        if left < 0: return 400 - 0 - left - 25
 
-        if left > 400: left -= y; return left
+        if left > 400: left -= y; return left - 25
 
-        return 400 - left
+        return 400 - left - 25
 
 
 def gameover(loser):
@@ -245,13 +245,13 @@ while True:
         if keys[pygame.K_s] and racket1.colliderect(bottom) == False:
             racket1[1] += 5
 
-        ball[0] += 2 * menudir[0]
-        ball[1] += 2 * menudir[1]
+        ball[0] += 3 * menudir[0]
+        ball[1] += 3 * menudir[1]
 
 
 #CHECKING FOR BOUND COLLISIONS
         if ball.colliderect(top) or ball.colliderect(bottom):
-            ball[1] -= 2 * menudir[1]
+            ball[1] -= 3 * menudir[1]
             menudir[1] = 0 - menudir[1]
             id = color()
         if ball.colliderect(left):
@@ -273,25 +273,25 @@ while True:
 #CHECKING FOR RACKET BALL COLLISIONS
         if ball.colliderect(racket1):
             if ball[0]-20 > racket1[0] or ball[0] > racket1[0]-50:
-                ball[0] -= 4 * menudir[0]
+                ball[0] -= 6 * menudir[0]
                 menudir[0] = 0 - menudir[0]
-            #ball[1] -= 4 * menudir[1]
+            #ball[1] -= 6 * menudir[1]
             #menudir[1] = 0 - menudir[1]
             Bob = getdest(ball[0], ball[1], menudir[1])
         
         if ball.colliderect(racket2):
             if ball[0]-20 > racket2[0] or ball[0] > racket2[0]-50:
-                ball[0] -= 4 * menudir[0]
+                ball[0] -= 6 * menudir[0]
                 menudir[0] = 0 - menudir[0]
-            #ball[1] -= 4 * menudir[1]
+            #ball[1] -= 6 * menudir[1]
             #menudir[1] = 0 - menudir[1]
   
 #AI MOVING TOWARDS DESIGNATED POSITION
 
         if menudir[0] == 1 and racket2[1] != Bob: #WTF?
             if Bob > racket2[1]:
-                racket2[1] += 2
-            else: racket2[1] -= 2
+                racket2[1] += 3
+            else: racket2[1] -= 3
 
         score1 = font.render(str(score1int), False, id)
         score2 = font.render(str(score2int), False, id)
@@ -343,13 +343,13 @@ while True:
         if keys[pygame.K_w] and racket1.colliderect(top) == False:
             racket1[1] -= 5
         
-        ball[0] += 2 * menudir[0]
-        ball[1] += 2 * menudir[1]
+        ball[0] += 3 * menudir[0]
+        ball[1] += 3 * menudir[1]
 
 
 #CHECKING FOR BOUND COLLISIONS
         if ball.colliderect(top) or ball.colliderect(bottom):
-            ball[1] -= 2 * menudir[1]
+            ball[1] -= 3 * menudir[1]
             menudir[1] = 0 - menudir[1]
             id = color()
         if ball.colliderect(left):
@@ -362,6 +362,9 @@ while True:
         if ball.colliderect(right):
             ball = pygame.Rect(300,200,20,20)
             score1int += 1
+            #damage control
+            print(racket2[1])
+            print(Bob)
             if racket1[1] > 200:
                 menudir = [-1,1]
             else:
@@ -370,16 +373,16 @@ while True:
 #CHECKING FOR RACKET BALL COLLISIONS
         if ball.colliderect(racket1):
             if ball[0]-20 > racket1[0] or ball[0] > racket1[0]-50:
-                ball[0] -= 4 * menudir[0]
+                ball[0] -= 6 * menudir[0]
                 menudir[0] = 0 - menudir[0]
-            #ball[1] -= 4 * menudir[1]
+            #ball[1] -= 6 * menudir[1]
             #menudir[1] = 0 - menudir[1]
         
         if ball.colliderect(racket2):
             if ball[0]-20 > racket2[0] or ball[0] > racket2[0]-50:
-                ball[0] -= 4 * menudir[0]
+                ball[0] -= 6 * menudir[0]
                 menudir[0] = 0 - menudir[0]
-            #ball[1] -= 4 * menudir[1]
+            #ball[1] -= 6 * menudir[1]
             #menudir[1] = 0 - menudir[1]
         
         score1 = font.render(str(score1int), False, id)
@@ -400,5 +403,3 @@ while True:
 
         clock.tick(120)
         pygame.display.flip()
-
-
