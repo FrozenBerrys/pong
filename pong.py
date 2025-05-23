@@ -363,8 +363,6 @@ while True:
             ball = pygame.Rect(300,200,20,20)
             score1int += 1
             #damage control
-            print(racket2[1])
-            print(Bob)
             if racket1[1] > 200:
                 menudir = [-1,1]
             else:
