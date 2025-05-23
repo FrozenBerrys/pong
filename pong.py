@@ -100,7 +100,7 @@ def gameover(loser):
         if id == 0:
             id = " sucks at video games"
         if id == 1:
-            id = ", GET PONGED BITCH!"
+            id = ", GET PONGED!"
         if id == 2:
             id = " sucks at video games"
         if id == 3:
